@@ -8,16 +8,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity	// JPA에서 엔티티를 관리하기 위해 준다.
 @Data
+//@ToString(exclude={"dept"})
 @AllArgsConstructor
 @NoArgsConstructor
 public class Emp {
@@ -41,7 +46,11 @@ public class Emp {
 	private Date hiredate;
 	private BigDecimal sal;
 	private BigDecimal comm;
-	private Integer deptno;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+//	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="deptno")
+	private Dept dept;
 }
 //EMPNO	 	NUMBER(4) 				CONSTRAINT EMP_EMPNO_PK PRIMARY KEY,
 //ENAME 	VARCHAR2(10 CHAR) 	NOT NULL, -- CHAR을 추가함으로써 글자단위로 변경.
