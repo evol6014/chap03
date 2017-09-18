@@ -24,15 +24,16 @@ public interface EmpRepository extends JpaRepository<Emp, BigInteger> {
 	@Query("select avg(e.sal), min(e.sal), max(e.sal) from Emp e")
 	List<Object[]> stat();
 	
-	@Query("select "
-			+ "new map("
-			+ "e.dept.deptno as deptno, "
-			+ "avg(e.sal) as avg, "
-			+ "min(e.sal) as min, "
-			+ "max(e.sal) as max"
-			+ ") "
-			+ "from Emp e "
-			+ "group by e.dept")
+//	@Query("select "
+//			+ "new map("
+//			+ "e.dept.deptno as deptno, "
+//			+ "avg(e.sal) as avg, "
+//			+ "min(e.sal) as min, "
+//			+ "max(e.sal) as max"
+//			+ ") "
+//			+ "from Emp e "
+//			+ "group by e.dept")
+	@Query("select new map(e.dept.deptno as deptno, avg(e.sal) as avg, min(e.sal) as min, max(e.sal) as max) from Emp e group by e.dept")
 	List<Map<String, Object>> stat2();
 	
 	List<Emp> findByEmpnoBetween(BigInteger left, BigInteger right);
